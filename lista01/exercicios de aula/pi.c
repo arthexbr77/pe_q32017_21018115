@@ -1,53 +1,44 @@
-#include <math.h>
 #include <stdio.h>
+#include <math.h>
+#define RAMA (2*sqrt(2)/9801)
 
-#define CONST_RAMA  (2.0*sqrt(2)/9801)
 
-int fatorial (int x) {
-	int y = (x*4)-1;
-	if (x == 0 || x == 1){
-		x == 1;
-		return x;
-	}else {
-	for (int n = 1;n <= y;n++){ 
-		
-		x = x*n;	
+int fatorial (int k) {
+
+	int fat;
+	for(fat=1;k>1;k--){
+	fat = fat*k;		
 	}
-	return x;
-	}
+	return fat;
 }
 
-float parcela (int y) {
-	float parcela, fat, i, elev;
-	int ele = y*4;
-	i = (1103 + (26390*y));
-	fat = fatorial (y);
-	parcela = ((fat*i)/(pow(fat,4)*pow(396,ele)));
-	return parcela;
-		
+float dem (int k) {
+	
+	float d;
+	d = pow(fatorial(k),4)*pow(396,(4*k));
+	return d;
 }
 
 
-float ramanujan (int k) {
-	float inv_pi;
-	float total = 0;
-	for(int n = 0;n <= k,n++;){
-		inv_pi= CONST_RAMA*parcela(n);
-		total = total + inv_pi;
-						
+float soma (int k) {
+
+	float inv = 0;
+
+	for (float n = 0; n < k; n++){
+		inv += fatorial(4*n)*(1103+(26390*n))/dem(n);	
 	}
-	return total;
+	return inv;
+
 }
 
-float main() {
-
-
-	int numero;
-	float inv_pi;
-
-	scanf("%d", &numero);
-	inv_pi = ramanujan (numero);
-	printf("%f", inv_pi);
-
+int main (){
+	int k;
+	float pi;
+	float inv;
+	printf("Escreva um número: ");
+	scanf("%d", &k);
+	pi = 1/(RAMA*soma(k));
+	printf("%f", pi);
+	
 }
 
